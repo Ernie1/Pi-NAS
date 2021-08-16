@@ -1,5 +1,5 @@
 # Π-NAS
-This repository provides the evaluation code of our submitted paper: ***Π-NAS: Improving Neural Architecture Search by Reducing Supernet Training Consistency Shift***.
+This repository provides the evaluation code of our submitted paper: ***Pi-NAS: Improving Neural Architecture Search by Reducing Supernet Training Consistency Shift***.
 
 ## Our Trained Models 
 - Here is a summary of our searched models:
