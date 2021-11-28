@@ -65,5 +65,24 @@ This repository provides the evaluation code of our submitted paper: ***Pi-NAS: 
     python experiments/segmentation/test.py --dataset citys --base-size 2048 --crop-size 768 --model deeplab --backbone alone_resnest50 --choice-indices 3 3 3 3 1 1 3 3 3 0 0 1 1 0 2 1 --aux --se-loss --resume /path/to/PiNAS_trans_citys.pth.tar --eval
     ```
 
-## TODO
-Training and Searching code will be released in the future.
+## Training and Searching
+This reimplementation is based on [OpenSelfSup](https://github.com/open-mmlab/OpenSelfSup) and [MoCo](https://arxiv.org/abs/1911.05722). Please acknowledge their contribution.  
+```bash
+cd OpenSelfSup && pip install -v -e .
+```
+### 1. Π-NAS Learning  
+```bash
+bash tools/dist_train.sh configs/pinas_learning.py 8 --work_dir /path/to/save/logs/and/models
+```
+### 2. Extract supernet backbone weights  
+```bash
+python tools/extract_backbone_weights.py /checkpoint/of/1. /extracted/weight/of/1.
+```
+### 3. Linear Training  
+```bash
+bash tools/dist_train.sh configs/pinas_linear_training.py 8 --pretrained /extracted/weight/of/1. --work_dir /path/to/save/logs/and/models
+```
+### 4. Linear Evaluation  
+```bash
+bash tools/dist_train.sh configs/pinas_linear_evaluation.py 8 --resume_from /checkpoint/of/3. --work_dir /path/to/save/logs/and/models
+```
